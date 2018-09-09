@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+
+{% block heading %}
+    ReadBooks
+{% endblock %}
+
+{% block body %}
+    <p>
+        <h2>Please login:</h2>
+    </p>
+
+    <form action="{{ url_for('login') }}" method="post">
+	  <div>
+	    <label for="username">Enter your username: </label>
+	    <input value='user1' type="text" name="username" placeholder="Username" id="username" required>
+	  </div>
+	  <div>
+	    <label for="pass">Enter your password: </label>
+	    <input value='user1' type="password" name="pass" placeholder="Password" id="pass" required>
+	  </div>
+	  <div class="form-example">
+	    <input type="submit" value="Submit">
+	  </div>
+	</form>
+
+{% endblock %}

@@ -1,0 +1,74 @@
+/*nesting*/
+
+html, body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+                background: url("messinger1.jpg") no-repeat top center;
+                background-attachment: fixed;
+                background-size: 100% 100%;
+            }
+
+textarea {
+    resize: none; }
+
+
+body a {
+    color: #336699;
+    text-decoration: none; }
+
+body a:hover {
+  color: #E18A07; }
+
+
+@media (max-width: 500px) {
+  body {
+    background: url("messinger2.jpg") no-repeat top center; } }
+
+.review-text {
+  height: 500px;
+  width: 710px; }
+
+.recommend-text {
+  width: 700px; }
+
+.rating-form {
+  width: 10px; }
+
+.myDisplayReview {
+  width: 700px;
+  max-height: 500px;
+  margin-bottom: 20px }
+
+.rew-bold {
+  font-weight: bold; }
+
+.user {
+  color: #336699; 
+  margin-bottom: 20px;
+  border: none;}
+
+.user-line {
+  margin-bottom: 5px;
+  border: none;}
+
+
+ .rev-block {
+  float: none;
+  width: 700px; 
+  border: none;
+  margin-top: 0px;
+  position-top: absolute; }
+
+.list-rev {
+  background-size: 100% 100%;
+  list-style-type: none;
+  border-style: none;
+  width: 700px; 
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin-bottom: 20px }
+
+.head {
+margin-left: 20px; }

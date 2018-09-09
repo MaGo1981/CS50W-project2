@@ -1,0 +1,34 @@
+{% extends "layout.html" %}
+
+{% block heading %}
+    ReadBooks
+{% endblock %}
+
+{% block body %}
+    <p>
+        Here you can become a registered user.
+    </p>
+
+	<form action="{{ url_for('register') }}" method="post">
+	  <div>
+	    <label for="name">Enter your username: </label>
+	    <input type="text" name="name" placeholder="Name" id="name" required>
+	  </div>
+	  <div>
+	    <label for="email">Enter your email: </label>
+	    <input type="email" name="email" placeholder="E-mail" id="email" required>
+	  </div>
+	  <div>
+	    <label for="passw">Enter your password: </label>
+	    <input type="password" name="passw" placeholder="Password" id="pass" required>
+	  </div>
+	  <div>
+	    <label for="repeatPass">Repeat your password: </label>
+	    <input type="password" name="repeatPass" placeholder="Repeat Password" id="repeatPass" required>
+	  </div>
+	  <div class="form-example">
+	    <input type="submit" value="Submit">
+	  </div>
+	</form>
+
+{% endblock %}
