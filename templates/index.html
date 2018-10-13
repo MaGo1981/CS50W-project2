@@ -1,10 +1,20 @@
-{% extends "layout.html" %}
-
-{% block title %}
-    Flights
-{% endblock %}
-
-{% block body %}
-    <h1>Index Page</h1>
-
-{% endblock %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="{{ url_for('static', filename='index.js') }}"></script>
+        <link rel="stylesheet" type="text/css" href="/static/CSS/normalize.css">
+        <link rel="stylesheet" type="text/css" href="/static/CSS/index.css">
+    </head>
+    <title>Messanger</title>
+    <body>
+        <form>
+            <input type="text" placeholder="Choose a display name" 
+             id="displayName" autofocus autocomplete="off" required>
+            <button type="submit">Submit</button>
+        </form>
+        <br>
+        <div id="greeting">
+        </div>
+    </body>
+</html>
+</html>
