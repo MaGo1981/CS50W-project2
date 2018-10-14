@@ -1,3 +1,6 @@
+
+// DOMContentLoaded (DOM = Document Object Model)- događaj kojeg pokreće završetak učitavanja stranice u web browser!
+// element.addEventListener(event, function, useCapture)
 document.addEventListener('DOMContentLoaded', () => {
     /*form tag selected - radi onsubmit?*/
     const form = document.querySelector('form');
