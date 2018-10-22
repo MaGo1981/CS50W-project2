@@ -3,6 +3,7 @@
 // DOMContentLoaded (DOM = Document Object Model)- događaj kojeg pokreće završetak učitavanja stranice u web browser!
 // element.addEventListener(event, function, useCapture) - secound event is a function (higher order functions)
 document.addEventListener('DOMContentLoaded', () => { 
+	// User related
 	/*id status selected*/
 	const currentStatus = document.querySelector('#status');
 	var nameForm = ``;
@@ -10,11 +11,25 @@ document.addEventListener('DOMContentLoaded', () => {
 	var nameError = ``;
 	var currentName = localStorage.getItem('displayName');
 
+	// Channel related
+	var currentChannel = localStorage.getItem('channel');
+	var channelForm = document.querySelector('#channelForm');
+	var channelField = document.querySelector('#channelField');
+	var channelError = document.querySelector('#channelError');
+	var channelsBar = document.querySelector('#channelsBar');
+	var channelsList = [];
+
 	// Connect to websocket
 	var socket = io.connect(location.protocol + '//' + document.domain + ':'
 						    + location.port);
 
-	// If no display name stored, ask to submit one
+ 	// Handle any errors that occur
+ 	socket.onerror = function(error) {
+		console.log('WebSocket Error: ' + error);
+	};
+
+	// User related ------------------------------------------------------------
+	// If no display name found, show input form 
 	if (currentName) {
 		const statusContent = `Logged in as ${currentName}`; // templated literal - like formated strings in Python (backtick simbol)   
 		currentStatus.innerHTML = statusContent;
@@ -38,7 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	nameForm.onsubmit = () => {
 		// Check if inputted name exists on server
 		const nameReq = nameField.value; /// nameReq is input form nameField. use getItem?
-		socket.emit('serverName check', {'name': nameReq}); // 1. WE EMIT EVENT 'serverName check' to the webserver, by passing in data assosiated with this event (JSON OBJECT)
+		socket.emit('add name', {'name': nameReq}); // 1. WE EMIT EVENT 'serverName check' to the webserver, by passing in data assosiated with this event (JSON OBJECT)
 
 		// Clear submission box, stop form from submitting
 		nameField.value = '';
@@ -48,7 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	// Save displayName if check succeeded 
 	// Socket listen to particular events
-	socket.on('serverName result', data => { // arrow function that takes as input variable data that is emited by socket
+	socket.on('name result', data => { // arrow function that takes as input variable data that is emited by socket
 		/// data is input from the user?
 		// if result key is True - application.py line 39
 		if (data.result) {
@@ -62,4 +77,49 @@ document.addEventListener('DOMContentLoaded', () => {
 		else  
 			nameError.innerHTML = `Sorry, please try another name.`;
 	});
+});
+
+	// End user related --------------------------------------------------------
+	
+	// Channel bar -------------------------------------------------------------
+	
+	// Initialize channel list if empty
+	socket.emit('channels');
+	
+	// Update channel list
+	socket.on('update channels', channels => {
+		if (channels) {
+			channelsList = channels;
+			const li = document.createElement('li');
+			channelsBar = ``;
+			for (let channel of channelsList) {
+				li.innerHTML = `${channel}`;
+				document.querySelector('#channelsBar').append(li);
+			}
+		}
+	});
+	// Initialize channel, last one visited by default 
+	//if (currentChannel) 
+		// display that channel
+	//else 
+		// display any channel 
+	
+	// Add channel 
+	channelForm.onsubmit = () => {
+		// Check if inputted name exists on server
+		const channelReq = channelField.value;
+		if (channelReq.length > 0)
+			socket.emit('add channel', {'channel': channelReq});
+		// Clear submission box/error message, stop form from submitting
+		channelField.value = '';
+		channelError.innerHTML = ``;
+		return false;
+	};
+	// Error message if channel not added
+	socket.on('add channel result', data => {
+		if (!(data['result']))
+			channelError.innerHTML = `<small>Sorry, invalid channel</small>`;	
+	});
+		
+	// End channel bar ---------------------------------------------------------
 });

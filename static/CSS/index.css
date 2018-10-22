@@ -1,5 +1,9 @@
 /*nesting*/
 
 html, body {
-                color: brown;
+                color: red;
+                font-weight: bold;
+            }
+#channelsBar {
+                list-style: none
             }

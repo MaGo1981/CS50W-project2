@@ -16,6 +16,7 @@ socketio = SocketIO(app)
 
 # 'MaGo1981' temporarily taken for testing
 display_names = ['MaGo1981']
+channels = ['hello', 'howdoyoudo']
 
 
 @app.route('/')
@@ -24,13 +25,20 @@ def index():
 
 
 @app.route('/names')
-def names():
+def view_names():
     return '{}'.format(display_names)
+
+@app.route('/channels')
+def view_channels():
+    return '{}'.format(channels)
 
 
 # Check if username exists
-@socketio.on('serverName check') # 2. when the socket detects this event called 'serverName check' emited from index.js - line 41
-def name_check(data):
+@socketio.on('add name') # 2. when the socket detects this event called 'serverName check' emited from index.js - line 41
+def add_name(data):
+    '''
+    Check if username exists.
+    '''
     result = {}
     name_req = str(data['name']) # first take the data, and get out the name, save it inside variable called name_req
     result['name'] = name_req    # save the data into result (check out JSON for result)
@@ -42,3 +50,30 @@ def name_check(data):
     else:
         result['result'] = False
         emit('serverName result', result)
+
+
+
+@socketio.on('add channel')
+def add_channel(data):
+    '''
+    Add channel if it's new, emit result and new channels
+    '''
+    result = {}
+    channel_req = str(data['channel'])
+    result['channel'] = channel_req
+    if (channel_req not in channels):
+        result['result'] = True
+        channels.append(channel_req)
+        emit('add channel result', result)
+        emit_channels()
+    else:
+        result['result'] = False
+        emit('add channel result', result)
+@socketio.on('channels')
+
+
+def emit_channels():
+    '''
+    Emit list of current channels to all users.
+    '''
+    emit('update channels', channels)
