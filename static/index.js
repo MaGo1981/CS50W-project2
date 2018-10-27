@@ -77,7 +77,6 @@ document.addEventListener('DOMContentLoaded', () => {
 		else  
 			nameError.innerHTML = `Sorry, please try another name.`;
 	});
-});
 
 	// End user related --------------------------------------------------------
 	
@@ -89,12 +88,15 @@ document.addEventListener('DOMContentLoaded', () => {
 	// Update channel list
 	socket.on('update channels', channels => {
 		if (channels) {
-			channelsList = channels;
-			const li = document.createElement('li');
-			channelsBar = ``;
-			for (let channel of channelsList) {
-				li.innerHTML = `${channel}`;
-				document.querySelector('#channelsBar').append(li);
+			channelsBar.innerHTML = ``;
+			for (let channel of channels) {
+				const li = document.createElement('li');
+				// bolden current channel
+				if (channel == currentChannel)
+					li.innerHTML = channel.bold();
+				else 
+					li.innerHTML = channel;
+				channelsBar.appendChild(li);
 			}
 		}
 	});
@@ -117,7 +119,11 @@ document.addEventListener('DOMContentLoaded', () => {
 	};
 	// Error message if channel not added
 	socket.on('add channel result', data => {
-		if (!(data['result']))
+		if (data.result) {
+			currentChannel = data.channel;
+			localStorage.setItem('channel', currentChannel);
+		}
+		else
 			channelError.innerHTML = `<small>Sorry, invalid channel</small>`;	
 	});
 		

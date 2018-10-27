@@ -76,4 +76,4 @@ def emit_channels():
     '''
     Emit list of current channels to all users.
     '''
-    emit('update channels', channels)
+    emit('update channels', channels, brodcast = True)
