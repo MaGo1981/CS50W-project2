@@ -1,9 +1,15 @@
 /*nesting*/
 
 html, body {
-                color: red;
-                font-weight: bold;
+                color: brown;
+                font-weight: normal;
             }
 #channelsBar {
                 list-style: none
+            }
+#messageForm {
+                position: fixed; bottom: 0; width: 60%;
+            }
+#messageField {
+                width: 80%;
             }

@@ -16,7 +16,13 @@ socketio = SocketIO(app)
 
 # 'MaGo1981' temporarily taken for testing
 display_names = ['MaGo1981']
-channels = ['hello', 'howdoyoudo']
+channels = {'hello': ['Hello, world'], 'howdoyoudo': ['howdoyoudo world', 'Second']}
+"""
+channels = {'channel1': ['one', 'two']}
+for (channel in channels):
+    for (message in channel):
+        print(message)
+"""
 
 
 @app.route('/')
@@ -30,7 +36,11 @@ def view_names():
 
 @app.route('/channels')
 def view_channels():
-    return '{}'.format(channels)
+    return '{}'.format(list(channels.keys()))
+
+@app.route('/messages/<channel>')
+def show_messages(channel):
+    return '{}'.format(channels[channel])
 
 
 # Check if username exists
@@ -59,21 +69,47 @@ def add_channel(data):
     Add channel if it's new, emit result and new channels
     '''
     result = {}
-    channel_req = str(data['channel'])
-    result['channel'] = channel_req
-    if (channel_req not in channels):
+    c = str(data)
+    result['channel'] = c # channel je key, c je value
+    print (reuslt.channel)
+    print (result['channel'])
+    print (result)
+    if (c not in channels): # channels je dict kanala, key je ime kanala c, a value su liste poruka
         result['result'] = True
-        channels.append(channel_req)
+        channels[c] = []
         emit('add channel result', result)
         emit_channels()
     else:
         result['result'] = False
         emit('add channel result', result)
+
+
 @socketio.on('channels')
-
-
-def emit_channels():
+def emit_channels(): # nema data parametra, jer je data server primio sa add channel eventom
     '''
     Emit list of current channels to all users.
     '''
-    emit('update channels', channels, brodcast = True)
+    emit('update channels', list(channels.keys()), broadcast=True)
+
+@socketio.on('add message')
+def add_message(data):
+    ''' 
+    Append message to channel up to 100 messages 
+    '''
+    c = str(data['channel'])
+    m = str(data['message'])
+    if (c in channels):
+        if (channels[c].length < 100):
+            channels[c].append(m)
+        else:
+           channels[c].pop(0)
+           channels[c].append(m)
+        emit_messages(c)
+
+
+@socketio.on('messages')
+def emit_messages(c):
+    '''
+    Emit list of messages to all users for 'c' 
+    '''
+    emit('update messages', {'channel': c, 'messages': channels[c]}, broadcast=True)
