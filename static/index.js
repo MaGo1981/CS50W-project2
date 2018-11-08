@@ -1,7 +1,41 @@
 // THIS PART OF THE CODE IS RUNNING LOCALLY ON OUR PC
 
+// Connect to websocket
+var socket = io.connect(location.protocol + '//' + document.domain + ':'
+                        + location.port);
+// Handle any errors that occur
+socket.onerror = function(error) {
+  console.log('WebSocket Error: ' + error);
+};
+ 
+// Load clicked channel 
+function loadIt(c) {
+  currentChannel = c; 
+  localStorage.setItem('channel', currentChannel);
+  // Bolden only selected channel's link 
+  document.querySelector(`#${currentChannel}`).style.fontWeight = 'bold';
+  socket.emit('messages', currentChannel); 
+}
+//returns the time HH:MM:SS in string format
+function timePlease() {
+  d = new Date();
+  let hour = d.getHours();
+  if (hour < 10) 
+    hour = "0" + hour;
+  let min = d.getMinutes();
+  if (min < 10)
+    min = "0" + min;
+  let sec = d.getSeconds();
+  if (sec < 10)
+    sec = "0" + sec;
+  return hour+":"+min+":"+sec;
+}
+var currentChannel = localStorage.getItem('channel');
+
 // DOMContentLoaded (DOM = Document Object Model)- događaj kojeg pokreće završetak učitavanja stranice u web browser!
 // element.addEventListener(event, function, useCapture) - secound event is a function (higher order functions)
+
+
 document.addEventListener('DOMContentLoaded', () => { 
 	// User related
 	/*id status selected*/
@@ -13,28 +47,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	// Channel related
 	var currentChannel = localStorage.getItem('channel');
-	var channelForm = document.querySelector('#channelForm');
-	var channelField = document.querySelector('#channelField');
-	var channelError = document.querySelector('#channelError');
-	var channelsBar = document.querySelector('#channelsBar');
+	const sideColumn = document.querySelector('#sideColumn');
+	const channelForm = document.querySelector('#channelForm');
+	const channelField = document.querySelector('#channelField');
+	const channelError = document.querySelector('#channelError');
+	const channelsBar = document.querySelector('#channelsBar');
 	var channelsList = [];
-	var loadChannel = document.querySelector('#loadChannel');
+	const selectChannel = document.getElementsByClassName('selectChannel');
     
     // Chat related	
-	var messagesArea = document.querySelector('#messages');
-	var messageForm = document.querySelector('#messageForm');
-	var messageField = document.querySelector('#messageField');
+	const messagesArea = document.querySelector('#messages');
+	const messageForm = document.querySelector('#messageForm');
+	const messageField = document.querySelector('#messageField');
 
-	// Connect to websocket
-	var socket = io.connect(location.protocol + '//' + document.domain + ':'
-						    + location.port);
-
- 	// Handle any errors that occur
- 	socket.onerror = function(error) {
-		console.log('WebSocket Error: ' + error);
-	};
 
 	// User related ------------------------------------------------------------
+
 	// If no display name found, show input form 
 	if (currentName) {
 		var statusContent = `Logged in as ${currentName}`; // templated literal - like formated strings in Python (backtick simbol)   
@@ -45,7 +73,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		var statusContent = `
 			<form id="nameForm">
 			<input type="text" placeholder="Choose a display name" 
-			 id="nameField" autofocus autocomplete-"off" required>
+			 id="nameField" autofocus autocomplete="off" required>
 			<button type="submit">Submit</button>'
 			</form>
 			<div id="nameError"></div>
@@ -95,32 +123,20 @@ document.addEventListener('DOMContentLoaded', () => {
 	
 	// Initialize channel list if empty
 	socket.emit('channels');
-	
-	// Update channel list
-	socket.on('update channels', channels => {
-		if (channels) {
-			channelsList = channels;
-			channelsBar.innerHTML = ``;
-			for (let channel of channelsList) {
-				const li = document.createElement('li');
-				li.innerHTML = `<a id="loadChannel" data-channel="${channel}" href="#">${channel}</a>`;
-				channelsBar.appendChild(li);
-			}
-		}
-	});
-	 
-	
+
 	// Add channel 
 	channelForm.onsubmit = () => {
 		// Check if inputted name exists on server
 		const channelReq = channelField.value;
 		if (channelReq.length > 0)
 			socket.emit('add channel', channelReq);
+
 		// Clear submission box/error message, stop form from submitting
 		channelField.value = '';
 		channelError.innerHTML = ``;
 		return false;
 	};
+	
 	// Error message if channel not added
 	socket.on('add channel result', data => {
 		if (data.result) {
@@ -131,27 +147,32 @@ document.addEventListener('DOMContentLoaded', () => {
 			channelError.innerHTML = `<small>Sorry, invalid channel</small>`;	
 	});
 		
-// End channel bar ---------------------------------------------------------
-  
-  // Update channel messages if on that channel
-  socket.on('update messages', data => {
-    if (data.channel == currentChannel) {
-      let newMessages = data.messages;
-			messagesArea.innerHTML = ``;
-			for (let m of newMessages) {
+	
+	// Update channel list
+	socket.on('update channels', channels => {
+    	if (channels) {
+    		channelsList = channels;
+    		channelsBar.innerHTML = ``;
+    		for (let channel of channelsList) {
 				const li = document.createElement('li');
-				li.innerHTML = m;
-				messagesArea.appendChild(li);
-      }
-    }
-  });
-  // Change channel
-  loadChannel.onclick = () => {
-    currentChannel = loadChannel.dataset.channel; 
-    localStorage.setItem('channel', currentChannel);
-    socket.on('messages', currentChannel); 
-    return false;
-  };
+				if (channel == currentChannel) 
+					li.innerHTML = `<b><a href="#" class="selectChannel" id="${channel}" onclick="loadIt('${channel}');return false;">${channel}</a></b>`;
+        		else
+					li.innerHTML = `<a href="#" class="selectChannel" id="${channel}" onclick="loadIt('${channel}');return false;">${channel}</a>`;
+				// when we want to associate additional data with html element, that is not displayed on the page, 
+				// we can put it inside a data atribute with the name of our own choosing, as long as it begins with data-. 
+				// To acces data atributes, we use .dataset!
+				channelsBar.appendChild(li);
+			}
+		}
+	});
+	 
+	
+
+// End channel bar ---------------------------------------------------------
+
+  // Chat window -------------------------------------------------------------
+
    // Initialize most recent channel/messages if available 
   if (currentChannel) {
     socket.emit('add channel', currentChannel);
@@ -164,20 +185,41 @@ document.addEventListener('DOMContentLoaded', () => {
     socket.emit('messages', currentChannel);
   }
  
- 	// Display message 
-	messageForm.onsubmit = () => {
-		// send message to server
-		const message = messageField.value;
-		socket.emit('add message', {'message': message, 'channel': currentChannel});
+ 	// Display new message 
+  messageForm.onsubmit = () => {
+    // send message to server
+    const formatTime = '[' + timePlease() + '] ';
+    const formatUser = currentName + ': ';
+    const  message = formatTime + formatUser + messageField.value;
+    const li = document.createElement('li');
+    socket.emit('add message', {'message': message, 'channel': currentChannel});
+    li.innerHTML = message;
+    messagesArea.appendChild(li);
     
-    // Add the message to the messages list.
-		const li = document.createElement('li');
-		li.innerHTML = message;
-		messages.appendChild(li);
-		// Clear, stop form from submitting
-		messageField.value = '';
-		return false;
-	};
- 
+    // Clear, stop form from submitting
+    messageField.value = '';
+    return false;
+  };
   // End chat window ---------------------------------------------------------
+
+  // Clear when connection lost
+  socket.on('disconnect', () => {
+    sideColumn.innerHTML = 'Logged out';
+    messagesArea.innerHTML = 'Connection Closed';
+  });
+
+});
+
+  // Update channel messages if on that channel
+  socket.on('update messages', data => {
+    if (data.channel == localStorage.getItem('channel')) {
+      let newMessages = data.messages;
+      document.querySelector('#messages').innerHTML = ``;
+      for (let m of newMessages) {
+        const li = document.createElement('li');
+        li.innerHTML = m;
+
+        document.querySelector('#messages').appendChild(li);
+      }
+    }
 });

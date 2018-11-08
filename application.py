@@ -27,7 +27,7 @@ for (channel in channels):
 
 @app.route('/')
 def index():
-        return render_template('index.html') 
+    return render_template('index.html') 
 
 
 @app.route('/names')
@@ -56,10 +56,10 @@ def add_name(data):
     if (name_req not in display_names):
         result['result'] = True # index.js - line 54
         display_names.append(name_req) # delete line 16?
-        emit('serverName result', result)
+        emit('name result', result)
     else:
         result['result'] = False
-        emit('serverName result', result)
+        emit('name result', result)
 
 
 
@@ -99,7 +99,7 @@ def add_message(data):
     c = str(data['channel'])
     m = str(data['message'])
     if (c in channels):
-        if (channels[c].length < 100):
+        if (len(channels[c]) < 100):
             channels[c].append(m)
         else:
            channels[c].pop(0)
@@ -110,6 +110,6 @@ def add_message(data):
 @socketio.on('messages')
 def emit_messages(c):
     '''
-    Emit list of messages to all users for 'c' 
+    Emit list of messages to all users for channel 'c' 
     '''
     emit('update messages', {'channel': c, 'messages': channels[c]}, broadcast=True)
