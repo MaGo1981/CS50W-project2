@@ -1,4 +1,4 @@
-// THIS PART OF THE CODE IS RUNNING LOCALLY ON OUR PC
+// THIS PART OF THE CODE IS RUNNING LOCALLY ON OUR PC.
 
 // Connect to websocket
 var socket = io.connect(location.protocol + '//' + document.domain + ':'
