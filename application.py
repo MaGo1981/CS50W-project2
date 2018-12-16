@@ -49,17 +49,22 @@ def add_name(data):
     '''
     Check if username exists.
     '''
+    # print('add name event - input objekt data = ',data)
     result = {}
     name_req = str(data['name']) # first take the data, and get out the name, save it inside variable called name_req
     result['name'] = name_req    # save the data into result (check out JSON for result)
+    print('add name event - objekt result - to check = ',result)
 
     if (name_req not in display_names):
         result['result'] = True # index.js - line 54
         display_names.append(name_req) # delete line 16?
         emit('name result', result)
+        print('add name event - objekt result - now appended to list =' ,name_req)
+        print('display_names list updated = ',display_names)
     else:
         result['result'] = False
         emit('name result', result)
+        print('add name event - objekt result - already on the list =' ,name_req)
 
 
 
@@ -89,7 +94,7 @@ def emit_channels(): # nema data parametra, jer je data server primio sa add cha
     '''
     Emit list of current channels to all users.
     '''
-    emit('update channels', list(channels.keys()), broadcast=True)
+    emit('update channels', list(channels.keys()), broadcast=True) # brodcast = True mora biti kada svim userima saljemo sa servera
 
 @socketio.on('add message')
 def add_message(data):

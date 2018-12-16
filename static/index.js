@@ -44,6 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	var nameField = ``;
 	var nameError = ``;
 	var currentName = localStorage.getItem('displayName');
+	console.log("Display Name retrieved from localStorage =", currentName)
 
 	// Channel related
 	var currentChannel = localStorage.getItem('channel');
@@ -67,9 +68,8 @@ document.addEventListener('DOMContentLoaded', () => {
 	if (currentName) {
 		var statusContent = `Logged in as ${currentName}`; // templated literal - like formated strings in Python (backtick simbol)   
 		currentStatus.innerHTML = statusContent;
-		// Update server's names list
-		socket.emit('add name', {'name': currentName});
-	} else {
+	} 
+	else {
 		var statusContent = `
 			<form id="nameForm">
 			<input type="text" placeholder="Choose a display name" 
@@ -91,7 +91,8 @@ document.addEventListener('DOMContentLoaded', () => {
 		// Check if inputted name exists on server
 		const nameReq = nameField.value; /// nameReq is input form nameField. use getItem?
 		socket.emit('add name', {'name': nameReq}); // 1. WE EMIT EVENT 'serverName check' to the webserver, by passing in data assosiated with this event (JSON OBJECT)
-
+		console.log("Name to be checked =", nameReq)
+		
 		// Clear submission box, stop form from submitting
 		nameField.value = '';
 		//form.reset();
@@ -100,14 +101,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	// Save displayName if check succeeded 
 	// Socket listen to particular events
-	socket.on('serverName result', data => { 
+	socket.on('name result', data => { 
 		// arrow function that takes as input variable data that is emited by socket
 		/// data is input from the server
 		// if result key is True - application.py line 39
 		// result object emited from the server becomes data object in .js so it is data.name here
 		if (data.result) {
 			localStorage.setItem('displayName', data.name);
-			currentName = data.name; /// use setItem? search JSON or data.
+			currentName = data.name; /// use setItem? search JSON or data. Ne, ovo je varijabla is .js, nije u localstorage!
+			console.log("New displayName added =", currentName)
 
 			const statusContent = `Welcome ${currentName}`;
 			currentStatus.innerHTML = statusContent;
