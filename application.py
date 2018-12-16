@@ -76,7 +76,7 @@ def add_channel(data):
     result = {}
     c = str(data)
     result['channel'] = c # channel je key, c je value
-    print (reuslt.channel)
+    print (result)
     print (result['channel'])
     print (result)
     if (c not in channels): # channels je dict kanala, key je ime kanala c, a value su liste poruka
