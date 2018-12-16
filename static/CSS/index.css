@@ -6,10 +6,21 @@ html, body {
             }
 #channelsBar {
                 list-style: none
-            }
+}
 #messageForm {
-                position: fixed; bottom: 0; width: 60%;
-            }
+                position: fixed; bottom: 0; width: 55%;
+}
 #messageField {
                 width: 80%;
-            }
+}
+div, form, a, #channelsBar {
+	border-style: ridge;
+}
+
+.chat {
+				position: fixed; 
+				bottom: 0; 
+				width: 55%;
+				position: absolute;
+				right:10px;
+}
