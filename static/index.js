@@ -66,7 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	// If no display name found, show input form 
 	if (currentName) {
-		var statusContent = `Logged in as ${currentName}`; // templated literal - like formated strings in Python (backtick simbol)   
+		var statusContent = `${currentName}`; // templated literal - like formated strings in Python (backtick simbol)   
 		currentStatus.innerHTML = statusContent;
 	} 
 	else {
@@ -116,7 +116,8 @@ document.addEventListener('DOMContentLoaded', () => {
 		}
 		// if result key is False - application.py line 43 (testiras s MaGo1981 ili nekim od ostalih imena s rute /names)
 		else  
-			nameError.innerHTML = `Sorry, please try another name.`;
+			nameError.innerHTML = `That name is already taken! Please try a different name.`;
+			console.log("That name is already taken! Please try a different name.")
 	});
 
 	// End user related --------------------------------------------------------
@@ -159,8 +160,10 @@ document.addEventListener('DOMContentLoaded', () => {
 				const li = document.createElement('li');
 				if (channel == currentChannel) 
 					li.innerHTML = `<b><a href="#" class="selectChannel" id="${channel}" onclick="loadIt('${channel}');return false;">${channel}</a></b>`;
+
         		else
 					li.innerHTML = `<a href="#" class="selectChannel" id="${channel}" onclick="loadIt('${channel}');return false;">${channel}</a>`;
+
 				// when we want to associate additional data with html element, that is not displayed on the page, 
 				// we can put it inside a data atribute with the name of our own choosing, as long as it begins with data-. 
 				// To acces data atributes, we use .dataset!

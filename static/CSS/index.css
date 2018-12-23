@@ -1,14 +1,15 @@
 /*nesting*/
 
 html, body {
-                color: brown;
+                color: white;
+                font-weight: bold;
                 font-weight: normal;
             }
 #channelsBar {
                 list-style: none
 }
 #messageForm {
-                position: fixed; bottom: 0; width: 55%;
+                position: fixed; bottom: 10px; width: 55%;
 }
 #messageField {
                 width: 80%;
@@ -19,8 +20,27 @@ div, form, a, #channelsBar {
 
 .chat {
 				position: fixed; 
-				bottom: 0; 
-				width: 55%;
+				bottom: 10px; 
+				width: 80%;
 				position: absolute;
 				right:10px;
+}
+#status, #icon {
+                width: 200px;
+                height: 30px;
+                text-align: center;
+}
+
+#sideBar {
+                width: 15%;
+                height: 900px;
+                text-align: center;
+                padding: 10px;
+                background-color: black;
+
+}
+
+ul {
+	height: 90%;
+	color: black;
 }

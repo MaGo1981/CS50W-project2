@@ -9,27 +9,34 @@
     </head>
 
     <body>
-        <div id="status">
+        <div id="sideBar">
+            <div id="status">
+            </div>
+            <div id="icon">
+                <img src="">
+            </div>
+            <br>
+            <form id="channelForm">
+                <input type="text" placeholder="New channel" 
+                id="channelField" autofocus autocomplete="off" required>
+                <button type="submit">Start</button>
+            </form>
+            <br>
+            <br>
+            <div id="channelError">
+                <br>
+                <br>
+                <br>
+            </div>
+            <br>
+            <br>
+            <ul id="channelsBar" class="list-unstyled">
+            </ul>
+            <br>
         </div>
-        <br>
-        <form id="channelForm">
-            <input type="text" placeholder="New channel" 
-            id="channelField" autofocus autocomplete="off" required>
-            <button type="submit">Start</button>
-        </form>
-        <br>
-        <br>
-        <div id="channelError">
-            <br>
-            <br>
-            <br>
-        </div>
-        <br>
-        <br>
-        <ul id="channelsBar" class="list-unstyled">
-        </ul>
-        <br>
         <div class="chat">
+            <div id="channelName">
+            </div>
             <ul id="messages" class="list-unstyled">
             </ul>
             <br>
