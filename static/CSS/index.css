@@ -4,13 +4,25 @@ html, body {
                 color: white;
                 font-weight: bold;
                 font-weight: normal;
+                padding-bottom: 50px;
             }
 #channelsBar {
                 list-style: none
 }
+
+
 #messageForm {
-                position: fixed; bottom: 10px; width: 55%;
+                position: fixed; 
+                padding-bottom: none;
+                bottom: 10px; 
+                width: 55%;
 }
+
+#messageArea {
+                
+}
+
+
 #messageField {
                 width: 80%;
 }
@@ -36,14 +48,22 @@ div, form, a, #channelsBar {
                 height: 900px;
                 text-align: center;
                 padding: 10px;
-                background-color: black;
+                background-color: rgb( 147, 141, 145 )
 
 }
 
-ul {
+li {
 	height: 90%;
 	color: black;
     background-color: blue;
+    border-radius: 5px;
+    margin: 10px;
+    padding: 10px;
+    background-color:rgb( 199, 246, 230 );
+    width: 50%;
 
 }
 
+#channelName {
+            color: black;
+}

@@ -53,6 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	const channelField = document.querySelector('#channelField');
 	const channelError = document.querySelector('#channelError');
 	const channelsBar = document.querySelector('#channelsBar');
+	const channelName = document.querySelector('#channelName');
 	var channelsList = [];
 	const selectChannel = document.getElementsByClassName('selectChannel');
     
@@ -182,6 +183,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (currentChannel) {
     socket.emit('add channel', currentChannel);
     socket.emit('messages', currentChannel);
+    
   }
   else {
     if (!(channelsList)) 
@@ -189,6 +191,8 @@ document.addEventListener('DOMContentLoaded', () => {
     currentChannel = channelsList[0];
     socket.emit('messages', currentChannel);
   }
+  currentChannel = `${currentChannel}`
+  channelName.innerHTML = currentChannel;
  
  	// Display new message 
   messageForm.onsubmit = () => {
