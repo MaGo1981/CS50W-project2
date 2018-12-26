@@ -136,7 +136,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 		// Clear submission box/error message, stop form from submitting
 		channelField.value = '';
-		channelError.innerHTML = ``;
+		channelError.innerHTML = '';
 		return false;
 	};
 	
@@ -193,6 +193,7 @@ document.addEventListener('DOMContentLoaded', () => {
  	// Display new message 
   messageForm.onsubmit = () => {
     // send message to server
+    var currentChannel = localStorage.getItem('channel');
     const formatTime = '[' + timePlease() + '] ';
     const formatUser = currentName + ': ';
     const  message = formatTime + formatUser + messageField.value;
@@ -207,10 +208,9 @@ document.addEventListener('DOMContentLoaded', () => {
   };
   // End chat window ---------------------------------------------------------
 
-  // Clear when connection lost
+  // Clear when connection lost - work on it!
   socket.on('disconnect', () => {
-    sideColumn.innerHTML = 'Logged out';
-    messagesArea.innerHTML = 'Connection Closed';
+    sideBar.innerHTML = 'Logged out';
   });
 
 });
