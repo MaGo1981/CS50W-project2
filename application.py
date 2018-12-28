@@ -16,7 +16,7 @@ socketio = SocketIO(app)
 
 # 'MaGo1981' temporarily taken for testing
 display_names = ['MaGo1981']
-channels = {'hello': ['[11:12:57] Kiseljak: Hello World'], 'howdoyoudo': ['[11:12:49] Kiseljak: howdoyoudo world', '[11:12:57] Kiseljak: Second']}
+channels = {'Channel1': ['[11:12:57] Kiseljak: Hello World'], 'Channel2': ['[11:12:49] Kiseljak: howdoyoudo world', '[11:12:57] Kiseljak: Second']}
 """
 channels = {'channel1': ['one', 'two']}
 for (channel in channels):

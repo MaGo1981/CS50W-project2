@@ -1,13 +1,15 @@
 /*nesting*/
 
 html, body {
-                color: white;
+                color: black;
                 font-weight: bold;
                 font-weight: normal;
                 padding-bottom: 50px;
+                background-color: #bcbc9c;
             }
 #channelsBar {
                 list-style: none
+                background-color:#be8b62;
 }
 
 
@@ -18,7 +20,7 @@ html, body {
                 width: 55%;
 }
 
-#messageArea {
+#messagesArea, .chat {  background-color: #bcbc9c;
                 
 }
 
@@ -27,13 +29,14 @@ html, body {
                 width: 80%;
 }
 div, form, a, #channelsBar {
-	border-style: ridge;
+	border-style: none;
 }
 
 .chat {
 				position: fixed; 
 				bottom: 10px; 
 				width: 80%;
+                height: 95%;
 				position: absolute;
 				right:10px;
 }
@@ -41,6 +44,9 @@ div, form, a, #channelsBar {
                 width: 200px;
                 height: 30px;
                 text-align: center;
+                margin: 10px;
+                padding: 10px;
+                font-weight: bolder;
 }
 
 #sideBar {
@@ -48,7 +54,7 @@ div, form, a, #channelsBar {
                 height: 900px;
                 text-align: center;
                 padding: 10px;
-                background-color: rgb( 147, 141, 145 )
+                background-color: #be8b62;
 
 }
 
@@ -56,14 +62,32 @@ li {
 	height: 90%;
 	color: black;
     background-color: blue;
-    border-radius: 5px;
+    border-radius: 10px;
     margin: 10px;
     padding: 10px;
-    background-color:rgb( 199, 246, 230 );
+    background-color:#5cb7b6;
     width: 50%;
+    list-style-type: none;
 
 }
 
 #channelName {
             color: black;
+            padding: 10px;
+            margin: 10px;
+            background-color: none;
+            font-weight: bolder;
 }
+
+#channelField {
+            width: 80%
+}
+
+a:link, a:visited {
+  color: black;
+}
+
+a:hover {
+  color: #ba5a57;
+}
+

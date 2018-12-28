@@ -11,6 +11,7 @@ socket.onerror = function(error) {
 // Load clicked channel 
 function loadIt(c) {
   currentChannel = c; 
+  channelName.innerHTML = currentChannel;
   localStorage.setItem('channel', currentChannel);
   // Bolden only selected channel's link 
   document.querySelector(`#${currentChannel}`).style.fontWeight = 'bold';
@@ -56,11 +57,13 @@ document.addEventListener('DOMContentLoaded', () => {
 	const channelName = document.querySelector('#channelName');
 	var channelsList = [];
 	const selectChannel = document.getElementsByClassName('selectChannel');
+	channelError.innerHTML = ``;
     
     // Chat related	
 	const messagesArea = document.querySelector('#messages');
 	const messageForm = document.querySelector('#messageForm');
 	const messageField = document.querySelector('#messageField');
+
 
 
 	// User related ------------------------------------------------------------
@@ -142,14 +145,14 @@ document.addEventListener('DOMContentLoaded', () => {
 	};
 	
 	// Error message if channel not added
-	socket.on('add channel result', data => {
-		if (data.result) {
-			currentChannel = data.channel;
-			localStorage.setItem('channel', currentChannel);
-		}
-		else
-			channelError.innerHTML = `<small>Sorry, invalid channel</small>`;	
-	});
+		socket.on('add channel result', data => {
+			if (data.result) {
+				currentChannel = data.channel;
+				localStorage.setItem('channel', currentChannel);
+			}
+			else
+				channelError.innerHTML = `<small>Sorry, invalid channel</small>`;	
+		});
 		
 	
 	// Update channel list
@@ -169,6 +172,8 @@ document.addEventListener('DOMContentLoaded', () => {
 				// we can put it inside a data atribute with the name of our own choosing, as long as it begins with data-. 
 				// To acces data atributes, we use .dataset!
 				channelsBar.appendChild(li);
+				CurrentChannel = `${currentChannel}`
+				channelName.innerHTML = CurrentChannel;
 			}
 		}
 	});
@@ -191,8 +196,8 @@ document.addEventListener('DOMContentLoaded', () => {
     currentChannel = channelsList[0];
     socket.emit('messages', currentChannel);
   }
-  currentChannel = `${currentChannel}`
-  channelName.innerHTML = currentChannel;
+  CurrentChannel = `${currentChannel}`
+  channelName.innerHTML = CurrentChannel;
  
  	// Display new message 
   messageForm.onsubmit = () => {
@@ -215,6 +220,8 @@ document.addEventListener('DOMContentLoaded', () => {
   // Clear when connection lost - work on it!
   socket.on('disconnect', () => {
     sideBar.innerHTML = 'Logged out';
+    messagesArea.innerHTML = 'Connection closed'
+    channelName.innerHTML = ''
   });
 
 });
