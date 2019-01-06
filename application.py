@@ -7,10 +7,10 @@ from flask_socketio import SocketIO, emit
 
 app = Flask(__name__)
 # app = Flask(__name__, instance_relative_config=True)
-# app.config.from_object('config')
+app.config.from_object('config')
 # app.config.from_pyfile('config.py')
 
-app.config["SECRET_KEY"] = os.getenv("SECRET_KEY")
+# app.config["SECRET_KEY"] = os.getenv("SECRET_KEY")
 socketio = SocketIO(app)
 
 
