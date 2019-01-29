@@ -1,50 +1,58 @@
 <!doctype html>
 <html lang="en">
     <head>
-      <link rel="stylesheet" type="text/css" href="/static/CSS/normalize.css">
-      <link rel="stylesheet" type="text/css" href="/static/CSS/index.css">
-      <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.6/socket.io.min.js"></script>
-      <script src="{{ url_for('static', filename='index.js') }}"></script>
-      <title>Messinger</title>
+        <link rel="stylesheet" type="text/css" href="/static/CSS/normalize.css">
+        <link rel="stylesheet" type="text/css" href="/static/CSS/index.css">
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.6/socket.io.min.js"></script>
+        <script src="{{ url_for('static', filename='index.js') }}"></script>
+        <title>Messinger</title>
     </head>
 
     <body>
-        <div id="sideBar">
-            <div id="status">
-            </div>
-            <div id="icon">
-                <img src="">
-            </div>
-            <br>
-            <form id="channelForm">
-                <input type="text" placeholder="New channel" 
-                id="channelField" autofocus autocomplete="off" required>
-                <button type="submit">Create Channel</button>
-            </form>
-            <br>
-            <br>
-            <div id="channelError">
+        <div class="container-fluid">
+            <div id="sideBar">
+                <div id="status">
+                </div>
+                <div id="icon">
+                    <img src="">
+                </div>
+                <br>
+                <form id="channelForm">
+                    <div class="form-group">
+                        <input type="text" placeholder="New channel" 
+                        id="channelField" autofocus autocomplete="off" required>
+                        <button type="submit"  class="btn btn-info">Create Channel</button>
+                    </div>
+                </form>
                 <br>
                 <br>
+                <div id="channelError">
+                    <br>
+                    <br>
+                    <br>
+                </div>
                 <br>
-            </div>
-            <br>
-            <br>
-            <ul id="channelsBar">
-            </ul>
-            <br>
-        </div>
-        <div class="chat">
-            <div id="channelName">
-            </div>
-            <div id= "messagesArea">
-                <ul id="messages" class="list-unstyled">
+                <br>
+                <ul id="channelsBar">
                 </ul>
                 <br>
-                <form id="messageForm">
-                    <input type="text" id="messageField" autofocus autocomplete="off">
-                    <button>Send</button>
-                </form>
+            </div>
+            <div class="chat">
+                <div id="channelName">
+                </div>
+                <div id= "messagesArea">
+                    <ul id="messages" class="list-unstyled">
+                    </ul>
+                    <br>
+                    <form id="messageForm">
+                        <input type="text" id="messageField" autofocus autocomplete="off">
+                        <button>Send</button>
+                    </form>
+                </div>
             </div>
         </div>
     </body>
