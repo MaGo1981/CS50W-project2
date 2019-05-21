@@ -14,16 +14,15 @@ html, body {
 
 
 #messageForm {
-                position: fixed; 
+                position: fixed;
                 padding-bottom: none;
-                bottom: 10px; 
+                bottom: 10px;
                 width: 55%;
 }
 
-#messagesArea, .chat {  background-color: #bcbc9c;
-                
-}
+#messagesArea, .chat {  background-color: green;
 
+}
 
 #messageField {
                 width: 80%;
@@ -33,8 +32,8 @@ div, form, a, #channelsBar {
 }
 
 .chat {
-				position: fixed; 
-				bottom: 10px; 
+				position: fixed;
+				bottom: 10px;
 				width: 80%;
                 height: 95%;
 				position: absolute;
@@ -90,4 +89,3 @@ a:link, a:visited {
 a:hover {
   color: #ba5a57;
 }
-

@@ -7,21 +7,21 @@ var socket = io.connect(location.protocol + '//' + document.domain + ':'
 socket.onerror = function(error) {
   console.log('WebSocket Error: ' + error);
 };
- 
-// Load clicked channel 
+
+// Load clicked channel
 function loadIt(c) {
-  currentChannel = c; 
+  currentChannel = c;
   channelName.innerHTML = currentChannel;
   localStorage.setItem('channel', currentChannel);
-  // Bolden only selected channel's link 
+  // Bolden only selected channel's link
   document.querySelector(`#${currentChannel}`).style.fontWeight = 'bold';
-  socket.emit('messages', currentChannel); 
+  socket.emit('messages', currentChannel);
 }
 //returns the time HH:MM:SS in string format
 function timePlease() {
   d = new Date();
   let hour = d.getHours();
-  if (hour < 10) 
+  if (hour < 10)
     hour = "0" + hour;
   let min = d.getMinutes();
   if (min < 10)
@@ -37,7 +37,7 @@ var currentChannel = localStorage.getItem('channel');
 // element.addEventListener(event, function, useCapture) - secound event is a function (higher order functions)
 
 
-document.addEventListener('DOMContentLoaded', () => { 
+document.addEventListener('DOMContentLoaded', () => {
 	// User related
 	/*id status selected*/
 	const currentStatus = document.querySelector('#status');
@@ -58,8 +58,8 @@ document.addEventListener('DOMContentLoaded', () => {
 	var channelsList = [];
 	const selectChannel = document.getElementsByClassName('selectChannel');
 	channelError.innerHTML = ``;
-    
-    // Chat related	
+
+    // Chat related
 	const messagesArea = document.querySelector('#messages');
 	const messageForm = document.querySelector('#messageForm');
 	const messageField = document.querySelector('#messageField');
@@ -68,44 +68,44 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	// User related ------------------------------------------------------------
 
-	// If no display name found, show input form 
+	// If no display name found, show input form
 	if (currentName) {
-		var statusContent = `${currentName}`; // templated literal - like formated strings in Python (backtick simbol)   
+		var statusContent = `${currentName}`; // templated literal - like formated strings in Python (backtick simbol)
 		currentStatus.innerHTML = statusContent;
-	} 
+	}
 	else {
 		var statusContent = `
 			<form id="nameForm">
-			<input type="text" placeholder="Choose a display name" 
+			<input type="text" placeholder="Choose a display name"
 			 id="nameField" autofocus autocomplete="off" required>
 			<button type="submit">Submit</button>'
 			</form>
 			<div id="nameError"></div>
 		`;
-		
+
 		currentStatus.innerHTML = statusContent;
 
 		nameForm = document.querySelector('#nameForm');
 		nameField = document.querySelector('#nameField');
 		nameError = document.querySelector('#nameError');
 	}
-	
-	// Display name submission 
+
+	// Display name submission
 	nameForm.onsubmit = () => {
 		// Check if inputted name exists on server
 		const nameReq = nameField.value; /// nameReq is input form nameField. use getItem?
 		socket.emit('add name', {'name': nameReq}); // 1. WE EMIT EVENT 'serverName check' to the webserver, by passing in data assosiated with this event (JSON OBJECT)
 		console.log("Name to be checked =", nameReq)
-		
+
 		// Clear submission box, stop form from submitting
 		nameField.value = '';
 		//form.reset();
 		return false;  // do not load new page
 	};
 
-	// Save displayName if check succeeded 
+	// Save displayName if check succeeded
 	// Socket listen to particular events
-	socket.on('name result', data => { 
+	socket.on('name result', data => {
 		// arrow function that takes as input variable data that is emited by socket
 		/// data is input from the server
 		// if result key is True - application.py line 39
@@ -119,19 +119,19 @@ document.addEventListener('DOMContentLoaded', () => {
 			currentStatus.innerHTML = statusContent;
 		}
 		// if result key is False - application.py line 43 (testiras s MaGo1981 ili nekim od ostalih imena s rute /names)
-		else  
+		else
 			nameError.innerHTML = `That name is already taken! Please try a different name.`;
 			console.log("That name is already taken! Please try a different name.")
 	});
 
 	// End user related --------------------------------------------------------
-	
+
 	// Channel bar -------------------------------------------------------------
-	
+
 	// Initialize channel list if empty
 	socket.emit('channels');
 
-	// Add channel 
+	// Add channel
 	channelForm.onsubmit = () => {
 		// Check if inputted name exists on server
 		const channelReq = channelField.value;
@@ -143,7 +143,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		channelError.innerHTML = '';
 		return false;
 	};
-	
+
 	// Error message if channel not added
 		socket.on('add channel result', data => {
 			if (data.result) {
@@ -151,10 +151,10 @@ document.addEventListener('DOMContentLoaded', () => {
 				localStorage.setItem('channel', currentChannel);
 			}
 			else
-				channelError.innerHTML = `<small>Sorry, invalid channel</small>`;	
+				channelError.innerHTML = `<small>Sorry, invalid channel</small>`;
 		});
-		
-	
+
+
 	// Update channel list
 	socket.on('update channels', channels => {
     	if (channels) {
@@ -162,14 +162,14 @@ document.addEventListener('DOMContentLoaded', () => {
     		channelsBar.innerHTML = ``;
     		for (let channel of channelsList) {
 				const li = document.createElement('li');
-				if (channel == currentChannel) 
+				if (channel == currentChannel)
 					li.innerHTML = `<b><a href="#" class="selectChannel" id="${channel}" onclick="loadIt('${channel}');return false;">${channel}</a></b>`;
 
         		else
 					li.innerHTML = `<a href="#" class="selectChannel" id="${channel}" onclick="loadIt('${channel}');return false;">${channel}</a>`;
 
-				// when we want to associate additional data with html element, that is not displayed on the page, 
-				// we can put it inside a data atribute with the name of our own choosing, as long as it begins with data-. 
+				// when we want to associate additional data with html element, that is not displayed on the page,
+				// we can put it inside a data atribute with the name of our own choosing, as long as it begins with data-.
 				// To acces data atributes, we use .dataset!
 				channelsBar.appendChild(li);
 				CurrentChannel = `${currentChannel}`
@@ -177,29 +177,29 @@ document.addEventListener('DOMContentLoaded', () => {
 			}
 		}
 	});
-	 
-	
+
+
 
 // End channel bar ---------------------------------------------------------
 
   // Chat window -------------------------------------------------------------
 
-   // Initialize most recent channel/messages if available 
+   // Initialize most recent channel/messages if available
   if (currentChannel) {
     socket.emit('add channel', currentChannel);
     socket.emit('messages', currentChannel);
-    
+
   }
   else {
-    if (!(channelsList)) 
+    if (!(channelsList))
       socket.emit('channels');
     currentChannel = channelsList[0];
     socket.emit('messages', currentChannel);
   }
   CurrentChannel = `${currentChannel}`
   channelName.innerHTML = CurrentChannel;
- 
- 	// Display new message 
+
+ 	// Display new message
   messageForm.onsubmit = () => {
     // send message to server
     var currentChannel = localStorage.getItem('channel');
@@ -210,7 +210,7 @@ document.addEventListener('DOMContentLoaded', () => {
     socket.emit('add message', {'message': message, 'channel': currentChannel});
     li.innerHTML = message;
     messagesArea.appendChild(li);
-    
+
     // Clear, stop form from submitting
     messageField.value = '';
     return false;
