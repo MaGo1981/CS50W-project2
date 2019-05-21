@@ -218,11 +218,11 @@ document.addEventListener('DOMContentLoaded', () => {
   // End chat window ---------------------------------------------------------
 
   // Clear when connection lost - work on it!
-  socket.on('disconnect', () => {
-    sideBar.innerHTML = 'Logged out';
-    messagesArea.innerHTML = 'Connection closed'
-    channelName.innerHTML = ''
-  });
+  // socket.on('disconnect', () => {
+  //   sideBar.innerHTML = 'Logged out';
+  //   messagesArea.innerHTML = 'Connection closed'
+  //   channelName.innerHTML = ''
+  // };
 
 });
 
