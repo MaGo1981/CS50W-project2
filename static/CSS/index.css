@@ -1,14 +1,16 @@
 /*nesting*/
 
 html, body {
+                /* border: dotted; */
                 color: black;
                 font-weight: bold;
                 font-weight: normal;
-                padding-bottom: 50px;
+                padding-bottom: None;
                 background-color: #bcbc9c;
             }
 #channelsBar {
-                list-style: none
+                border: dotted;
+                list-style: armenian;
                 background-color:#be8b62;
 }
 
@@ -18,6 +20,7 @@ html, body {
                 padding-bottom: none;
                 bottom: 10px;
                 width: 55%;
+                height: 50px;
 }
 
 #messagesArea, .chat {  background-color: green;
@@ -35,7 +38,7 @@ div, form, a, #channelsBar {
 				position: fixed;
 				bottom: 10px;
 				width: 80%;
-                height: 95%;
+                height: 100%;
 				position: absolute;
 				right:10px;
 }
@@ -49,8 +52,8 @@ div, form, a, #channelsBar {
 }
 
 #sideBar {
-                width: 15%;
-                height: 900px;
+                width: 18%;
+                height: 100%;
                 text-align: center;
                 padding: 10px;
                 background-color: #be8b62;

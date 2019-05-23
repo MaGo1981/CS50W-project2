@@ -38,7 +38,9 @@ var currentChannel = localStorage.getItem('channel');
 
 
 document.addEventListener('DOMContentLoaded', () => {
+
 	// User related
+  
 	/*id status selected*/
 	const currentStatus = document.querySelector('#status');
 	var nameForm = ``;
@@ -70,7 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	// If no display name found, show input form
 	if (currentName) {
-		var statusContent = `${currentName}`; // templated literal - like formated strings in Python (backtick simbol)
+		var statusContent = `Hello ${currentName}!`; // templated literal - like formated strings in Python (backtick simbol)
 		currentStatus.innerHTML = statusContent;
 	}
 	else {
@@ -149,6 +151,7 @@ document.addEventListener('DOMContentLoaded', () => {
 			if (data.result) {
 				currentChannel = data.channel;
 				localStorage.setItem('channel', currentChannel);
+        channelError.innerHTML = ``;
 			}
 			else
 				channelError.innerHTML = `<small>Sorry, invalid channel</small>`;
@@ -159,7 +162,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	socket.on('update channels', channels => {
     	if (channels) {
     		channelsList = channels;
-    		channelsBar.innerHTML = ``;
+    		channelsBar.innerHTML = `<font size="5"> List of channels:  </font>`;
     		for (let channel of channelsList) {
 				const li = document.createElement('li');
 				if (channel == currentChannel)
@@ -172,7 +175,7 @@ document.addEventListener('DOMContentLoaded', () => {
 				// we can put it inside a data atribute with the name of our own choosing, as long as it begins with data-.
 				// To acces data atributes, we use .dataset!
 				channelsBar.appendChild(li);
-				CurrentChannel = `${currentChannel}`
+				CurrentChannel = `Channel: ${currentChannel}`
 				channelName.innerHTML = CurrentChannel;
 			}
 		}
