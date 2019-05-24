@@ -23,13 +23,25 @@ html, body {
                 height: 50px;
 }
 
-#messagesArea, .chat {  background-color: green;
+#messagesArea {  background-color: yellow;
+}
 
+.chat {  background-color: yellow;
+         height: 80%
 }
 
 #messageField {
                 width: 80%;
+
 }
+
+ul#messages {
+                width: 80%;
+                height: 50%;
+                margin-bottom: 0px;
+}
+
+
 div, form, a, #channelsBar {
 	border-style: none;
 }
@@ -61,14 +73,13 @@ div, form, a, #channelsBar {
 }
 
 li {
-	height: 90%;
-	color: black;
-    background-color: blue;
+	  height: 90%;
+	  color: black;
     border-radius: 10px;
     margin: 10px;
     padding: 10px;
     background-color:#5cb7b6;
-    width: 50%;
+    width: 90%;
     list-style-type: none;
 
 }
@@ -77,7 +88,7 @@ li {
             color: black;
             padding: 10px;
             margin: 10px;
-            background-color: none;
+            background-color: orange;
             font-weight: bolder;
 }
 

@@ -16,7 +16,7 @@ socketio = SocketIO(app)
 
 # 'MaGo1981' temporarily taken for testing
 display_names = ['MaGo1981']
-channels = {'Channel1': ['[11:12:57] Kiseljak: Hello World'], 'Channel2': ['[11:12:49] Kiseljak: howdoyoudo world', '[11:12:57] Kiseljak: Second']}
+channels = {'About this app': ['[19:23:56] Marko: Hello world! Check out my new app!! ', '[19:27:07] Joe: Hi Marko! What is this app? Tell me about it.', '[19:35:51] Marko: Hi Joe! This is a messinger application! You can create a channel for a particular topic that you are interested in and discuss it with other interested users.', '[19:49:34] Joe: How did you create it?', '[19:52:45] Marko: I created it using a combination of Flask and Java Script. Flask is used for the server side part of application and Java Script is used for the user side of the application.', '[19:56:58] Joe: How does it work?', '[14:57:50] Marko: On the client side I have html, css and js files. HTML is used to lay out the structure of the webpage. CSS is a language for interaction with and styling of HTML. In I write the code that is run by the client inside the web browser in JS file. On the serves side I have Flask code in application.py file. Users are connecting trough the server. With messinger I need full duplex (real time) communication. That is why I use Websockets protocol. I want to get information from the server without needing to reload an entirely new page. That is why I use Ajax.', '[15:15:46] Joe: How does data travel from one user to another?', '[15:20:09] Marko: Data must travel form client side to the serves side and than from the server side to another client. There is a special language for representing information in human and computer readable way that we use for this kind of comunication. It is called JSON.', '[15:25:54] Joe: Do you not need some kind of database to store messages data on the server?', '[15:32:13] Marko: I could use a database, but for this application I use simple dictionaries on the server side that stores messages and user information. User information is also stored on the client side. LocalStorage is a variable in JavaScript where information can be either loaded from or saved to.'], 'Channel2': ['[11:12:49] Kiseljak: howdoyoudo world', '[11:12:57] Kiseljak: Second']}
 """
 channels = {'channel1': ['one', 'two']}
 for (channel in channels):
@@ -27,7 +27,7 @@ for (channel in channels):
 
 @app.route('/')
 def index():
-    return render_template('index.html') 
+    return render_template('index.html')
 
 
 @app.route('/names')
@@ -98,8 +98,8 @@ def emit_channels(): # nema data parametra, jer je data server primio sa add cha
 
 @socketio.on('add message')
 def add_message(data):
-    ''' 
-    Append message to channel up to 100 messages 
+    '''
+    Append message to channel up to 100 messages
     '''
     c = str(data['channel'])
     m = str(data['message'])
@@ -115,6 +115,6 @@ def add_message(data):
 @socketio.on('messages')
 def emit_messages(c):
     '''
-    Emit list of messages to all users for channel 'c' 
+    Emit list of messages to all users for channel 'c'
     '''
     emit('update messages', {'channel': c, 'messages': channels[c]}, broadcast=True)
