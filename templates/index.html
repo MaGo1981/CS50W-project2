@@ -14,48 +14,54 @@
 
     <body>
         <div class="container-fluid">
-          <div class="page">
-            <div id="sideBar">
-                <div id="status">
-                </div>
-                <div id="icon">
-                    <img src="">
-                </div>
-                <br>
-                <form id="channelForm">
-                    <div class="form-group">
-                        <input type="text" placeholder="New channel"
-                        id="channelField" autofocus autocomplete="off" required>
-                        <button type="submit"  class="btn btn-info">Create Channel</button>
-                    </div>
-                </form>
-                <br>
-                <br>
-                <div id="channelError">
-                    <br>
-                    <br>
-                    <br>
-                </div>
-                <br>
-                <br>
-                <b>
-                <ul id="channelsBar">
-                </ul>
-                <br>
-            </div>
-            <div class="chat">
-                <div id="channelName">
-                </div>
-                <div id= "messagesArea">
-                    <ul id="messages" class="list-unstyled">
+          <div class="row">
+            <div class="col-md-4">
+              <div id="sideBar">
+                  <div id="status">
+                  </div>
+                  <div id="icon">
+                      <img src="">
+                  </div>
+                  <br>
+                  <form id="channelForm">
+                      <div class="form-group">
+                          <input type="text" placeholder="New channel"
+                          id="channelField" autofocus autocomplete="off" required>
+                          <button type="submit"  class="btn btn-info">Create Channel</button>
+                      </div>
+                  </form>
+                  <br>
+                  <br>
+                  <div id="channelError">
+                      <br>
+                      <br>
+                      <br>
+                  </div>
+                  <br>
+                  <br>
+                  <b>
+                  <div class="channelsBar">
+                    <ul id="channelsBar">
                     </ul>
-                    <br>
-                    <form id="messageForm">
-                        <input type="text" id="messageField" autofocus autocomplete="off">
-                        <button>Send</button>
-                    </form>
+                </div>
+                  <br>
+              </div>
+            </div>
+            <div class="col-md-8">
+              <div class="chat">
+                  <div id="channelName">
+                  </div>
+                  <div id= "messagesArea">
+                      <ul id="messages" class="list-unstyled">
+                      </ul>
+                      <br>
+                      <form id="messageForm">
+                          <input type="text" id="messageField" autofocus autocomplete="off">
+                          <button>Send</button>
+                      </form>
+                  </div>
                 </div>
             </div>
-          </div>
+        </div>
     </body>
 </html>
