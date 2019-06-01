@@ -13,8 +13,9 @@ function loadIt(c) {
   currentChannel = c;
   channelName.innerHTML = currentChannel;
   localStorage.setItem('channel', currentChannel);
+  console.log("currentChannel changed to: ", currentChannel)
   // Bolden only selected channel's link
-  document.querySelector(`#${currentChannel}`).style.fontWeight = 'bold';
+  // document.querySelector(`${channel}`).style.fontWeight = 'bold';
   socket.emit('messages', currentChannel);
 }
 //returns the time HH:MM:SS in string format
@@ -40,7 +41,7 @@ var currentChannel = localStorage.getItem('channel');
 document.addEventListener('DOMContentLoaded', () => {
 
 	// User related
-  
+
 	/*id status selected*/
 	const currentStatus = document.querySelector('#status');
 	var nameForm = ``;
@@ -72,7 +73,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	// If no display name found, show input form
 	if (currentName) {
-		var statusContent = `Hello ${currentName}!`; // templated literal - like formated strings in Python (backtick simbol)
+		var statusContent = `Hello ${currentName}! Welcome to Flack!`; // templated literal - like formated strings in Python (backtick simbol)
 		currentStatus.innerHTML = statusContent;
 	}
 	else {
@@ -117,13 +118,13 @@ document.addEventListener('DOMContentLoaded', () => {
 			currentName = data.name; /// use setItem? search JSON or data. Ne, ovo je varijabla is .js, nije u localstorage!
 			console.log("New displayName added =", currentName)
 
-			const statusContent = `Welcome ${currentName}`;
+			const statusContent = `Hello ${currentName}! Welcome to Flack!`;
 			currentStatus.innerHTML = statusContent;
 		}
 		// if result key is False - application.py line 43 (testiras s MaGo1981 ili nekim od ostalih imena s rute /names)
 		else
 			nameError.innerHTML = `That name is already taken! Please try a different name.`;
-			console.log("That name is already taken! Please try a different name.")
+			//console.log("That name is already taken! Please try a different name.")
 	});
 
 	// End user related --------------------------------------------------------
@@ -154,7 +155,8 @@ document.addEventListener('DOMContentLoaded', () => {
         channelError.innerHTML = ``;
 			}
 			else
-				channelError.innerHTML = `<small>Sorry, invalid channel</small>`;
+				// channelError.innerHTML = `<small>Sorry, invalid channel</small>`;
+        console.log("Sorry, invalid channel")
 		});
 
 
@@ -194,10 +196,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
   }
   else {
-    if (!(channelsList))
+    if (!(channelsList)){
       socket.emit('channels');
     currentChannel = channelsList[0];
     socket.emit('messages', currentChannel);
+    }
   }
   CurrentChannel = `${currentChannel}`
   channelName.innerHTML = CurrentChannel;
